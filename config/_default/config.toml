@@ -1,7 +1,7 @@
 # Change baseurl before deploy
-baseurl      = "https://starter.stack.cai.im/"
+baseurl      = "https://MAXYXAM12.github.io/Mblog/"
 languageCode = "en-us"
-title        = "Hugo Theme Stack Starter"
+title        = "Max's Blog"
 
 # Theme i18n support
 # See all available values at https://github.com/CaiJimmy/hugo-theme-stack/tree/master/i18n
