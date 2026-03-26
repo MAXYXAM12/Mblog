@@ -2,7 +2,7 @@
 title: Apple Music Download On macOS
 description: 本地下载 ALAC 无损音乐，让 AM 成为完全体
 slug: apple-music-download
-date: 2026-03-27 01:00:00+0000
+date: 2026-03-26 01:00:00+0000
 image: cover.png
 categories:
     - HiFi
