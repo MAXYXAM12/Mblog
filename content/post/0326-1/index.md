@@ -1,6 +1,6 @@
 ---
 title: Apple Music Download On macOS
-description: 获取 ALAC 无损音乐最简单的方式
+description: 本地下载 ALAC 无损音乐，让 AM 成为完全体
 slug: apple-music-download
 date: 2026-03-26 01:00:00+0000
 image: cover.png
@@ -76,9 +76,9 @@ osascript -e '
 '
 ```
 
-原版教程中想要下载必须得输入 `go run main.go <url>` ，非常麻烦，所以我让 AI 写了一个函数实现在 apple-music-downloader 目录下输入 url 回车后自动添加 go run main.go 。
+原版教程中想要下载必须得输入 `go run main.go <url>` ，非常麻烦，所以我让 AI 写了一个函数实现在 apple-music-downloader 目录下输入 url 回车后自动添加 `go run main.go` 。
 
-用 Finder 打开 `/Users/你的用户名` ，键盘按 `command + shift + 句号` 会显示隐藏文件，找到 `.zshrc` 并双击打开，在最后复制粘贴并保存。
+用 Finder 打开 `/Users/你的用户名` ，键盘按 `command + shift + 句号` 会显示隐藏文件，找到 `.zshrc` 并双击打开，在最后加上如下内容。
 
 ```zsh
 chpwd() {
@@ -107,6 +107,34 @@ bindkey '^M' auto_go_run   # 回车键触发（Enter）
 1. 双击 `AM启动.sh` ，应当会先启动 `am-wrapper` ，然后再弹出一个新的 Terminal 窗口
 2. 在第二个 Terminal 窗口中直接复制粘贴 Apple Music 的网址，然后回车
 
+## 下载设置
+
+建议使用 `VScode` 等软件打开 `/Users/你的用户名/apple-music-downloader` 文件夹中的 `config.yaml` ，根据作者的提示修改即可。
+
+第一条 `media-user-token` 的获取方式需要你在 `Chrome` 中登录 Apple Music ，然后在任意界面鼠标右键 inspect（审查元素），找到 `media-user-token` 后把那一大串复制粘贴到 `config.yaml` 对应位置
+
+![Image 1](token.png)
+
+追求最高音质，有几条内容是需要特别注意的：
+
+```zsh
+embed-lrc: true
+max-memory-limit: 1024 # MB
+get-m3u8-from-device: true
+#set 'all' to retrieve all m3u8, and set 'hires' to only detect hires m3u8.
+get-m3u8-mode: hires # all hires
+aac-type: aac-lc # aac-lc aac aac-binaural aac-downmix
+alac-max: 192000  #192000 96000 48000 44100
+atmos-max: 2768  #2768 2448
+```
+
+如果你不喜欢 `ALAC` 编码的 `.m4a` 文件，原作者也在最下面提供了 `ffmpeg` **无损转换** `.wav` 的功能：
+
+```zsh
+convert-after-download: true     # Enable post-download conversion (requires ffmpeg)
+convert-format: "wav"            # flac | mp3 | opus | wav | copy (no re-encode)
+```
+
 ## 管理容器
 
 开一个窗口（拉长一点），复制粘贴以下内容
@@ -121,8 +149,8 @@ container ls -a
 container stop am-wrapper
 ```
 
-**注意：有的时候音乐下载会报错，那么就需要 stop ，然后再重启一键启动脚本
-
-未完待续……
+**注意：有的时候音乐下载会报错，那么就需要 stop ，然后再重启一键启动脚本**
 
 > Reference: <https://applemusic.mintlify.app/amdl/quickstart/macos>
+
+> Windows 使用 `WSL`| 推荐 Reference: <https://blog.karune.icu/2025/06/04/am_linux/>
