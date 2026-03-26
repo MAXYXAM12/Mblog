@@ -5,9 +5,9 @@ slug: hello-world
 date: 2026-03-26 00:00:00+0000
 image: cover.jpg
 categories:
-    - Example Category
+    - 杂项
 tags:
-    - Example Tag
+    - Skill
 weight: 1       # You can add weight to some posts to override the default sorting (date descending)
 ---
 
