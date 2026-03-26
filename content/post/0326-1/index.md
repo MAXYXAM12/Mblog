@@ -15,13 +15,13 @@ weight: 1       # You can add weight to some posts to override the default sorti
 
 ## 准备工具
 
-1.一台 Apple Silicon (M系列芯片)的 macOS 设备，且系统为 macOS 26+
+1. 一台 Apple Silicon (M系列芯片)的 macOS 设备，且系统为 macOS 26+
 
-2.科学上网 & 任意 Coding 能力较强的 AI
+2. 科学上网 & 任意 Coding 能力较强的 AI
 
-3.一个已经购买 Apple Music 任意方案的 Apple ID
+3. 一个已经购买 Apple Music 任意方案的 Apple ID
 
-4.耐心和信心：相信自己能独立完成
+4. 耐心和信心：相信自己能独立完成
 
 ## Apple Container 配置
 
@@ -53,12 +53,75 @@ echo -n 6位验证码 > /Users/你的用户名/2fa.txt
 
 ## 简化流程
 
-新开一个 Terminal 窗口，复制黏贴以下内容
+新开一个 Terminal 窗口，复制黏贴以下内容，等待运行终止后关闭窗口
 
 ```zsh
 container system start
 container run --name am-wrapper -v /Users/你的用户名:/app/rootfs/data -p 10020:10020 -p 20020:20020 -e args="-M 20020 -H 0.0.0.0"  ghcr-pull.ygxz.in/itouakirai/wrapper:arm
 ```
+
+## 一键启动脚本
+
+在**桌面**创建一个文件 `AM启动.txt` ，然后复制粘贴。**完成后把.txt改成.sh**
+
+```zsh
+#!/bin/zsh
+container system start
+container start am-wrapper 
+osascript -e '
+  tell application "Terminal"
+    activate
+    do script "cd ~/apple-music-downloader && clear && echo \"已进入 apple-music-downloader 目录\""
+  end tell
+'
+```
+
+原版教程中想要下载必须得输入 `go run main.go <url>` ，非常麻烦，所以我让 AI 写了一个函数实现在 apple-music-downloader 目录下输入 url 回车后自动添加 go run main.go 。
+
+用 Finder 打开 `/Users/你的用户名` ，键盘按 `command + shift + 句号` 会显示隐藏文件，找到 `.zshrc` 并双击打开，在最后复制粘贴并保存。
+
+```zsh
+chpwd() {
+  if [[ $PWD == $HOME/apple-music-downloader* ]]; then
+    [[ -f .zshrc ]] && source .zshrc
+  fi
+}
+```
+
+将修改好的 `.zshrc` 文件复制一份到 `/Users/你的用户名/apple-music-downloader` ，并将里面内容全部替换为如下，并保存。
+
+```zsh
+autoload -Uz add-zsh-hook
+function auto_go_run() {
+  if [[ $BUFFER == http* ]]; then
+    BUFFER="go run main.go $BUFFER"
+    zle accept-line
+  fi
+}
+zle -N auto_go_run
+bindkey '^M' auto_go_run   # 回车键触发（Enter）
+```
+
+至此，整个下载流程就被简化为两步：
+
+1. 双击 `AM启动.sh` ，应当会先启动 `am-wrapper` ，然后再弹出一个新的 Terminal 窗口
+2. 在第二个 Terminal 窗口中直接复制粘贴 Apple Music 的网址，然后回车
+
+## 管理容器
+
+开一个窗口（拉长一点），复制粘贴以下内容
+
+```zsh
+container ls -a
+```
+
+你应该可以看到一个表格，ID 为 am-wrapper , STATE 为 running 。通过以下命令可以暂停这个容器（建议下载完音乐之后养成 stop 的习惯）
+
+```zsh
+container stop am-wrapper
+```
+
+**注意：有的时候音乐下载会报错，那么就需要 stop ，然后再重启一键启动脚本
 
 未完待续……
 
