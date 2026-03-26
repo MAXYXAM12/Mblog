@@ -27,7 +27,7 @@ weight: 1       # You can add weight to some posts to override the default sorti
 
 `Container` 简单来说就是 Apple 版 `Docker` ，用法和 `Docker` 差不多，性能和方便性更好。Apple Music 音乐下载这个项目应该是利用了安卓版 AM ，所以需要 `Container/Docker` 这样的虚拟环境
 
-全文接下来的代码都需要用到 macOS 终端 (Terminal) ，并且默认你已经配置过 Homebrew （如果还没有，请问 AI 如何在 macOS 上配置 Homebrew ）
+全文接下来的代码都需要用到 macOS 终端 `Terminal` ，并且默认你已经配置过 `Homebrew` （如果还没有，请问 AI 如何在 macOS 上配置 `Homebrew` ）
 
 ```zsh
 brew install go gpac git container && git clone https://github.com/zhaarey/apple-music-downloader.git
@@ -113,7 +113,7 @@ bindkey '^M' auto_go_run   # 回车键触发（Enter）
 
 第一条 `media-user-token` 的获取方式需要你在 `Chrome` 中登录 Apple Music ，然后在任意界面鼠标右键 inspect（审查元素），找到 `media-user-token` 后把那一大串复制粘贴到 `config.yaml` 对应位置
 
-![Image 1](token.png)
+![Image 1](image1.png)
 
 追求最高音质，有几条内容是需要注意的：
 
@@ -143,7 +143,7 @@ convert-format: "wav"            # flac | mp3 | opus | wav | copy (no re-encode)
 container ls -a
 ```
 
-你应该可以看到一个表格，`ID` 为 am-wrapper , `STATE` 为 running 。通过以下命令可以暂停这个容器（建议下载完音乐之后养成 stop 的习惯）
+你应该可以看到一个表格，`ID` 为 `am-wrapper` , `STATE` 为 `running` 。通过以下命令可以暂停这个容器（建议下载完音乐之后养成 **stop** 的习惯）
 
 ```zsh
 container stop am-wrapper
