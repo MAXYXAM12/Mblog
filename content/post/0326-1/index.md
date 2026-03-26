@@ -107,6 +107,8 @@ bindkey '^M' auto_go_run   # 回车键触发（Enter）
 1. 双击 `AM启动.sh` ，应当会先启动 `am-wrapper` ，然后再弹出一个新的 Terminal 窗口
 2. 在第二个 `Terminal` 窗口中直接复制粘贴 Apple Music 的网址，然后回车
 
+> 注意：网址内只能为英文，如<https://music.apple.com/cn/album/オリジナルサウンドトラック-英雄伝説vi-空の軌跡/502445161>中间日文应当全部删除再复制，只需保留album/114514或者song/666666完整即可；否则可能报错。
+
 ## 下载设置
 
 建议使用 `VScode` 等软件打开 `/Users/你的用户名/apple-music-downloader` 文件夹中的 `config.yaml` ，根据作者的提示修改即可。
@@ -152,4 +154,5 @@ container stop am-wrapper
 注意：有的时候音乐下载会报错，那么就需要 `stop` ，然后再运行 `AM启动.sh`
 
 > Reference: <https://applemusic.mintlify.app/amdl/quickstart/macos>
+>
 > Windows 使用 `WSL`| 推荐 Reference: <https://blog.karune.icu/2025/06/04/am_linux/>
