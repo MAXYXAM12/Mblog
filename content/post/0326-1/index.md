@@ -107,7 +107,11 @@ bindkey '^M' auto_go_run   # 回车键触发（Enter）
 1. 双击 `AM启动.sh` ，应当会先启动 `am-wrapper` ，然后再弹出一个新的 Terminal 窗口
 2. 在第二个 `Terminal` 窗口中直接复制粘贴 Apple Music 的网址，然后回车
 
-> 注意：网址内只能为英文，如<https://music.apple.com/cn/album/オリジナルサウンドトラック-英雄伝説vi-空の軌跡/502445161>中间日文应当全部删除再复制，只需保留album/114514或者song/666666完整即可；否则可能报错。
+> 注意：只需保留 `Album/Song ID` ，如 <https://music.apple.com/cn/album/オリジナルサウンドトラック-英雄伝説vi-空の軌跡/502445161> 中间日文应当全部删除再复制，只需保留 <https://music.apple.com/cn/album/502445161> 否则可能报错。
+>
+> 日文歌曲可以尝试将 `music.apple.com/**cn**` 改为 `music.apple.com/**jp**` 可能可以避免显示罗马音，前提是 `Storefronts` 中有 Japan
+>
+> 推荐 `Chrome` 通过 `Tampermonkey/Violentmonkey` 安装 `Ame` 插件 <https://gitlab.com/SuperSaltyGamer/ame/-/raw/main/dist/applemusic.user.js> 从而在 AM 网页端查看 `Storefronts` 和音乐规格（如 24bit 48khz）
 
 ## 下载设置
 
