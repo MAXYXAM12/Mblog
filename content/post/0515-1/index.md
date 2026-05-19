@@ -1,6 +1,6 @@
 ---
 title: Roon + HQPlayer 配置经验
-description: $830+350 的天价软件对 PC-Hifi 有多大提升？
+description: $830+350 的天价软件对 PC-HiFi 有多大提升？
 slug: roon-hqplayer
 date: 2026-05-15 01:00:00+0000
 image: cover.png
@@ -17,9 +17,7 @@ weight: 1       # You can add weight to some posts to override the default sorti
 
 1. 一台 PC ，macOS 12+ 或 Windows ，CPU 性能越高越好
 
-2. BT 下载器，推荐 **qBittorrent**
-
-3. AI ，辅助理解
+2. BT 下载器，推荐 **qBittorrent** 
 
 ## 软件介绍
 
@@ -41,24 +39,44 @@ HQPlayer Desktop 5.17.1:
 magnet:?xt=urn:btih:02285FC7F175AEDEAA5066AFDC43248B79631129&dn=HQPlayer Desktop 5.17.1
 ```
 
+## Roon to HQPlayer 设置
+
+Roon: Settings -> Setup -> Add HQPlayer ，然后底部 `Select an audio zone` 选择 HQPlayer 
+
+HQPlayer: 单击主界面左侧边栏最下面一个按钮（形似两方块用一曲线连接），使其保持选中状态
+
+## HQPlayer 推荐配置
+
+> 如果时间充足，请务必认真阅读 `hqplayer5desktop-manual.pdf` 。作者针对每个配置选项有详尽介绍，可喂给 AI 辅助理解，一定会有所收获。
+
+![Outputs](Outputs.png)
+
+`Backend` PC-Hifi 不用网播（ NAA ）的话选择 `Coreaudio｜macOS` / `WASAPI、ASIO（更推荐）｜Windows`
+
+`Device` 选择你的解码/界面名称
+
+`SDM pack`如果选择 SDM 升频（DSD）就选择 `DoP` ，否则 `none` 
+
+`48k DSD` 解码支持的话可以开
+
+`Default mode` 有三种：`PCM` 只输出 PCM （会把 DSD 转 PCM ），`DSD` 只输出 DSD （会把 PCM 转 DSD ），`source` 则是 PCM 升 PCM ，DSD 升 DSD 
+
+`Adaptive rate` 意思是对 44.1khz 基频选择整数或非整数倍（如 44.1khz -> 768khz ）升频，推荐 PCM 升频时打勾，DSD 升频时关闭（因为大部分解码不支持 48k DSD ）
+
+`Fixed Volume` 推荐打勾，相当于 -3dB gain ，提供一定 headroom 动态余量，防止 clipping 削波以及一些渣录混音源在升频后可能发生的爆音
+
+`PCM gain compensation` 用于降低 PCM 音量从而和 DSD 达到一致，建议设 0 ，有需要可以根据 `hqplayer5desktop-manual.pdf` 中的表格设置
+
+![Advanced](Advanced.png)
+
+![PCM](PCM.png)
+
+![SDM](SDM.png)
 
 
-> 注意：只需保留 `Album/Song ID` ，如 <https://music.apple.com/cn/album/オリジナルサウンドトラック-英雄伝説vi-空の軌跡/502445161> 中间日文应当全部删除再复制，只需保留 <https://music.apple.com/cn/album/502445161> 否则可能报错。
->
-> 日文歌曲可以尝试将 `music.apple.com/**cn**` 改为 `music.apple.com/**jp**` 可能可以避免显示罗马音，前提是 `Storefronts` 中有 Japan
->
-> 推荐 `Chrome` 通过 `Tampermonkey/Violentmonkey` 安装 `Ame` 插件 <https://gitlab.com/SuperSaltyGamer/ame/-/raw/main/dist/applemusic.user.js> 从而在 AM 网页端查看 `Storefronts` 和音乐规格（如 24bit 48khz）
-
-## 下载设置
-
-建议使用 `VScode` 等软件打开 `/Users/你的用户名/
-
-![Image 1](image1.png)
-
-追求最高音质，有几条内容是需要注意的：
 
 
 
-> Reference: <https://applemusic.mintlify.app/amdl/quickstart/macos>
->
-> Windows 使用 `WSL`| 推荐 Reference: <https://blog.karune.icu/2025/06/04/am_linux/>
+
+
+
