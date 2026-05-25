@@ -107,22 +107,28 @@ PCM 和 SDM 的 `Filter` 滤波设置统一在文末介绍。
 
 1. poly-sinc-ext2 系列
 
-该系列在 Nyquist 频率处完全截止，能极其有效地抑制带外噪声和混叠失真；主观听感上音色自然，有“模拟味”，且有多档变体适配不同需求，例如：
+  该系列在 Nyquist 频率处完全截止，能极其有效地抑制带外噪声和混叠失真；主观听感上音色自然，有“模拟味”，且有多档变体适配不同需求，例如：
 
--short：减少振铃，瞬态更好
--medium：平衡长度与滚降速度
--long / -xla：极长抽头，滤波质量极高，提升解析
--hires：对 HiRes 和 MQA/MP3 源优化，极高阻带衰减，同时清理编码噪声。
+  -short：减少振铃，瞬态更好
+
+  -medium：平衡长度与滚降速度
+
+  -long / -xla：极长抽头，滤波质量极高，提升解析
+
+  -hires：对 HiRes 和 MQA/MP3 源优化，极高阻带衰减，同时清理编码噪声。
 
 2. poly-sinc-gauss 系列
 
-该系列优化了瞬态响应，使得音头音尾都能清晰分离，应对快节奏音乐更佳；同样有许多变体。
+  该系列优化了瞬态响应，使得音头音尾都能清晰分离，应对快节奏音乐更佳；同样有许多变体。
 
 3. sinc 系列
 
-sinc-S/M/Mx 是 poly-sinc-ext2-xla 的变体
-sinc-MGa 是 poly-sinc-gauss-xla 的变体
-sinc-L 是主打超高抽头数的滤波，主观听感上解析、线条感强，声场开阔，适合交响乐；这一滤波是 HQPlayer 中性能开销最高的滤波
-sinc-Lh 是 sinc-L 的低性能要求版本
+  sinc-S/M/Mx 是 poly-sinc-ext2-xla 的变体
+
+  sinc-MGa 是 poly-sinc-gauss-xla 的变体
+
+  sinc-L 是主打超高抽头数的滤波，主观听感上解析、线条感强，声场开阔，适合交响乐；这一滤波是 HQPlayer 中性能开销最高的滤波
+
+  sinc-Lh 是 sinc-L 的低性能要求版本
 
 > 拓展阅读：<https://www.rainlain.com/index.php/2025/05/13/3481>
