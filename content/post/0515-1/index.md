@@ -1,6 +1,6 @@
 ---
 title: Roon + HQPlayer 快速配置
-description: $830+350 的天价软件对 PC-HiFi 有多大提升？
+description: $830+350 的天价软件对 PC-HiFi 有多大提升？试试便知
 slug: roon-hqplayer
 date: 2026-05-15 01:00:00+0000
 image: cover.png
@@ -87,7 +87,7 @@ PCM 和 SDM 的 `Filter` 滤波设置统一在文末介绍。
 
 ![SDM](SDM.png)
 
-首先应当明确，对 SDM 来说 `Modulator` 调制方式比 `Bit rate` 更重要。
+应当明确，对 SDM 来说 `Modulator` 调制方式比 `Bit rate` 更重要。
 
 其中，7 阶调制器比 5 阶调制器性能更好，HQPlayer 作者只推荐 ESS 芯片 DAC 考虑使用 5 阶。
 
@@ -105,7 +105,7 @@ PCM 和 SDM 的 `Filter` 滤波设置统一在文末介绍。
 
 笔者一共推荐 3 个大类：
 
-1. poly-sinc-ext2 系列
+### 1. poly-sinc-ext2 系列
 
   该系列在 Nyquist 频率处完全截止，能极其有效地抑制带外噪声和混叠失真；主观听感上音色自然，有“模拟味”，且有多档变体适配不同需求，例如：
 
@@ -117,17 +117,17 @@ PCM 和 SDM 的 `Filter` 滤波设置统一在文末介绍。
 
   -hires：对 HiRes 和 MQA/MP3 源优化，极高阻带衰减，同时清理编码噪声。
 
-2. poly-sinc-gauss 系列
+### 2. poly-sinc-gauss 系列
 
   该系列优化了瞬态响应，使得音头音尾都能清晰分离，应对快节奏音乐更佳；同样有许多变体。
 
-3. sinc 系列
+### 3. sinc 系列
 
   sinc-S/M/Mx 是 poly-sinc-ext2-xla 的变体
 
   sinc-MGa 是 poly-sinc-gauss-xla 的变体
 
-  sinc-L 是主打超高抽头数的滤波，主观听感上解析、线条感强，声场开阔，适合交响乐；这一滤波是 HQPlayer 中性能开销最高的滤波
+  sinc-L 是主打超高抽头数、CPU 性能开销最大的滤波，主观听感上解析、线条感强，声场开阔，适合古典
 
   sinc-Lh 是 sinc-L 的低性能要求版本
 
