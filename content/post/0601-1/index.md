@@ -26,4 +26,3 @@ weight: 1       # You can add weight to some posts to override the default sorti
 不难看出从内存中的音频文件到人脑产生的听觉，其中经过了 1 次衰减、2 次放大、3 次转换（数模转换、电声转换、声-感知转换），这几个步骤在整个路径中对声音影响最大
 
 未完待续...
-

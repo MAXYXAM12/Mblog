@@ -1,5 +1,5 @@
 ---
-title: Roon + HQPlayer 快速配置
+title: Roon + HQPlayer Quick Setup
 description: $830+350 的天价软件对 PC-HiFi 有多大提升？试试便知
 slug: roon-hqplayer
 date: 2026-05-15 01:00:00+0000
