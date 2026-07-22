@@ -9,6 +9,7 @@ categories:
 tags:
     - HiFi
 weight: 1       # You can add weight to some posts to override the default sorting (date descending)
+math: true
 ---
 
 ## 前言
