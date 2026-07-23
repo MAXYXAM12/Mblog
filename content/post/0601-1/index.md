@@ -770,14 +770,7 @@ $$
 
 归一化后：
 
-$$
-|H(f)|
-=
-\left|
-\frac{\sin(\pi f/f_s)}
-{\pi f/f_s}
-\right|
-$$
+$$ |H(f)| = \left| \frac{\sin(\pi f/f_s)}{\pi f/f_s} \right| $$
 
 因此：**频率越高，零阶保持的输出幅度越低。**
 
@@ -806,15 +799,7 @@ $$
 
 则：
 
-$$
-|H(f)|
-=
-\left|
-\frac{\sin(\pi\times20000/44100)}
-{\pi\times20000/44100}
-\right|
-\approx0.694
-$$
+$$ |H(f)| = \left| \frac{\sin(\pi\times20000/44100)}{\pi\times20000/44100} \right| \approx0.694 $$
 
 换算为分贝：
 
