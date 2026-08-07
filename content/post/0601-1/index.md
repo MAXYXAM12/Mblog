@@ -1762,12 +1762,7 @@ SPL
 因此最终测得的频率响应实际上可以理解成多个环节传递函数的乘积：
 
 $$
-H_{total}(f)
-============
-
-H_{driver}(f)
-H_{acoustic}(f)
-H_{ear}(f)
+H_{total}(f)=H_{driver}(f)*H_{acoustic}(f)*H_{ear}(f)
 $$
 
 其中 $H_{driver}$ 是换能器本身，$H_{acoustic}$ 是腔体、导管、耳罩等产生的声学传递函数，而 $H_{ear}$ 则代表人体耳廓、耳道等结构的影响。
@@ -2565,12 +2560,7 @@ $$
 一般可以通过：
 
 $$
-Sensitivity_{mW}
-================
-
-## Sensitivity_V
-
-10\log_{10}\left(\frac{1000}{R}\right)
+Sensitivity_{mW} = Sensitivity_V + 10\log_{10}\left(\frac{1000}{R}\right)
 $$
 
 进行换算。
@@ -2578,12 +2568,7 @@ $$
 反过来：
 
 $$
-Sensitivity_V
-=============
-
-Sensitivity_{mW}
-+
-10\log_{10}\left(\frac{1000}{R}\right)
+Sensitivity_V = Sensitivity_{mW} + 10\log_{10}\left(\frac{1000}{R}\right)
 $$
 
 因此：
@@ -2627,15 +2612,7 @@ $$
 因此输出可能变成：
 
 $$
-y(t)
-====
-
-A_1\sin(\omega t)
-+
-A_2\sin(2\omega t)
-+
-A_3\sin(3\omega t)
-+\cdots
+y(t) = A_1\sin(\omega t) + A_2\sin(2\omega t) + A_3\sin(3\omega t) + \cdots
 $$
 
 原本只有：
