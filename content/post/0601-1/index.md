@@ -5614,14 +5614,7 @@ $$
 
 传统动圈音圈属于运动系统的一部分，因此：
 
-$$
-M_{moving}
-=
-M_{diaphragm}
-+
-M_{voice\ coil}
-+\cdots
-$$
+$$ M_{moving} = M_{diaphragm} + M_{voice\ coil} + \cdots $$
 
 而平板的导体可以直接沉积或形成在薄膜表面，不再需要传统意义上的独立绕制音圈。
 
