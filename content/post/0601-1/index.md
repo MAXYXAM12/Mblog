@@ -6222,19 +6222,11 @@ $$
 
 于是可以得到：
 
-$$
-M_{moving}
-=
-M_{diaphragm}
-+
-M_{conductive\ layer}
-$$
+$$ M_{moving} = M_{diaphragm} + M_{conductive\ layer} $$
 
 而导电层极薄，所以：
 
-$$
-M_{moving}\approx M_{diaphragm}
-$$
+$$ M_{moving}\approx M_{diaphragm} $$
 
 这使静电振膜能够达到非常低的单位面积质量。
 
@@ -6380,9 +6372,7 @@ $$
 
 $$ F_{left}(x) + F_{right}(x) $$
 
-能够形成更加对称的总驱动力。
-
-因此可以降低部分偶次非线性，并改善整体线性度。`index.md` 也将 Push-Pull 结构与偶次谐波降低联系起来。
+能够形成更加对称的总驱动力。因此可以降低部分偶次非线性，并改善整体线性度。
 
 所以**Push-Pull 的意义不是简单增加驱动力，而是让驱动力更加对称。**
 
