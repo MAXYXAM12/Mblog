@@ -4018,16 +4018,7 @@ $$
 
 总运动质量可以近似表示为：
 
-$$
-M_{ms}
-=
-M_{diaphragm}
-+
-M_{voice\ coil}
-+
-M_{air}
-+\cdots
-$$
+$$ M_{ms} = M_{diaphragm} + M_{voice\ coil} + M_{air} + \cdots $$
 
 因此音圈越重：
 
@@ -4191,19 +4182,9 @@ $$
 
 因此振膜性能不仅由材料决定：
 
-$$
-性能
-=
-材料
-+
-厚度
-+
-几何
-+
-阻尼
-+
-边界条件
-$$
+```text
+性能=材料+厚度+几何+阻尼+边界条件
+```
 
 这也是为什么不能简单地说：“某种材料比另一种材料好。”
 
@@ -4429,15 +4410,7 @@ $$
 
 因此可以把整个系统写成：
 
-$$
-H_{total}(f)
-=
-H_{driver}(f)
-\cdot
-H_{acoustic}(f)
-\cdot
-H_{ear}(f)
-$$
+$$ H_{total}(f) = H_{driver}(f) \cdot H_{acoustic}(f) \cdot H_{ear}(f) $$
 
 其中：
 
@@ -5571,19 +5544,7 @@ RLC网络
 因此：
 
 $$
-Sound
-=
-Driver
-+
-Cavity
-+
-Tube
-+
-Damping
-+
-Vent
-+
-Ear
+Sound=Driver+Cavity+Tube+Damping+Vent+Ear
 $$
 
 这也是为什么：
