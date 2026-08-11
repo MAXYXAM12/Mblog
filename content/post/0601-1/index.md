@@ -8371,7 +8371,7 @@ $$
 
 ### 推力计算器
 
-{{< amp-calculator >}}
+{{< calculator >}}
 
 ---
 
