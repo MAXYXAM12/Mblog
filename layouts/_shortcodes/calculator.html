@@ -198,6 +198,8 @@
   </p>
 </div>
 
-{{- $css := resources.Get "css/calculator.css" | resources.Minify | fingerprint -}}
+{{- $css := resources.Get "css/calculator.css" | minify | fingerprint -}}
 <link rel="stylesheet" href="{{ $css.RelPermalink }}">
-<script src="{{ "js/calculator.js" | relURL }}" defer></script>
+
+{{- $js := resources.Get "js/calculator.js" | minify | fingerprint -}}
+<script src="{{ $js.RelPermalink }}"></script>
