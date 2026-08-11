@@ -1,0 +1,69 @@
+<div class="amp-calculator" data-amp-calculator>
+  <div class="amp-calculator__grid">
+    <div>
+      <label for="amp-lufs-{{ .Ordinal }}">音乐平均 LUFS</label>
+      <input id="amp-lufs-{{ .Ordinal }}" data-field="lufs" type="number" value="-14" step="0.1">
+    </div>
+
+    <div>
+      <label for="amp-peak-{{ .Ordinal }}">True Peak / dBTP</label>
+      <input id="amp-peak-{{ .Ordinal }}" data-field="peak" type="number" value="-1" step="0.1">
+    </div>
+
+    <div>
+      <label for="amp-track-{{ .Ordinal }}">Track Gain / dB</label>
+      <input id="amp-track-{{ .Ordinal }}" data-field="track" type="number" value="0" step="0.1">
+    </div>
+
+    <div>
+      <label for="amp-digital-{{ .Ordinal }}">数字音量 / dB</label>
+      <input id="amp-digital-{{ .Ordinal }}" data-field="digital" type="number" value="-20" step="0.1">
+    </div>
+
+    <div>
+      <label for="amp-dac-{{ .Ordinal }}">DAC 满幅输出 / Vrms</label>
+      <input id="amp-dac-{{ .Ordinal }}" data-field="dac" type="number" value="2" step="0.01" min="0">
+    </div>
+
+    <div>
+      <label for="amp-gain-{{ .Ordinal }}">耳放增益 / dB</label>
+      <input id="amp-gain-{{ .Ordinal }}" data-field="gain" type="number" value="6" step="0.1">
+    </div>
+
+    <div>
+      <label for="amp-imp-{{ .Ordinal }}">耳机阻抗 / Ω</label>
+      <input id="amp-imp-{{ .Ordinal }}" data-field="imp" type="number" value="32" step="0.1" min="0.001">
+    </div>
+
+    <div>
+      <label for="amp-sens-{{ .Ordinal }}">耳机灵敏度</label>
+      <input id="amp-sens-{{ .Ordinal }}" data-field="sens" type="number" value="105" step="0.1">
+    </div>
+
+    <div>
+      <label for="amp-sens-unit-{{ .Ordinal }}">灵敏度单位</label>
+      <select id="amp-sens-unit-{{ .Ordinal }}" data-field="sensUnit">
+        <option value="V">dB/V</option>
+        <option value="mW">dB/mW</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="amp-spl-{{ .Ordinal }}">目标 SPL / dB</label>
+      <input id="amp-spl-{{ .Ordinal }}" data-field="spl" type="number" value="90" step="0.1">
+    </div>
+
+    <div>
+      <label for="amp-rout-{{ .Ordinal }}">耳放输出阻抗 / Ω</label>
+      <input id="amp-rout-{{ .Ordinal }}" data-field="rout" type="number" value="0.1" step="0.01" min="0">
+    </div>
+  </div>
+
+  <div class="amp-calculator__result" data-result aria-live="polite"></div>
+</div>
+
+{{ if not (.Page.Scratch.Get "ampCalculatorAssetsLoaded") }}
+  {{ .Page.Scratch.Set "ampCalculatorAssetsLoaded" true }}
+  <link rel="stylesheet" href="{{ "css/amp-calculator.css" | relURL }}">
+  <script src="{{ "js/amp-calculator.js" | relURL }}" defer></script>
+{{ end }}
