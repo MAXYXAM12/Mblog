@@ -1,69 +1,203 @@
 <div class="amp-calculator" data-amp-calculator>
-  <div class="amp-calculator__grid">
-    <div>
-      <label for="amp-lufs-{{ .Ordinal }}">音乐平均 LUFS</label>
-      <input id="amp-lufs-{{ .Ordinal }}" data-field="lufs" type="number" value="-14" step="0.1">
-    </div>
-
-    <div>
-      <label for="amp-peak-{{ .Ordinal }}">True Peak / dBTP</label>
-      <input id="amp-peak-{{ .Ordinal }}" data-field="peak" type="number" value="-1" step="0.1">
-    </div>
-
-    <div>
-      <label for="amp-track-{{ .Ordinal }}">Track Gain / dB</label>
-      <input id="amp-track-{{ .Ordinal }}" data-field="track" type="number" value="0" step="0.1">
-    </div>
-
-    <div>
-      <label for="amp-digital-{{ .Ordinal }}">数字音量 / dB</label>
-      <input id="amp-digital-{{ .Ordinal }}" data-field="digital" type="number" value="-20" step="0.1">
-    </div>
-
-    <div>
-      <label for="amp-dac-{{ .Ordinal }}">DAC 满幅输出 / Vrms</label>
-      <input id="amp-dac-{{ .Ordinal }}" data-field="dac" type="number" value="2" step="0.01" min="0">
-    </div>
-
-    <div>
-      <label for="amp-gain-{{ .Ordinal }}">耳放增益 / dB</label>
-      <input id="amp-gain-{{ .Ordinal }}" data-field="gain" type="number" value="6" step="0.1">
-    </div>
-
-    <div>
-      <label for="amp-imp-{{ .Ordinal }}">耳机阻抗 / Ω</label>
-      <input id="amp-imp-{{ .Ordinal }}" data-field="imp" type="number" value="32" step="0.1" min="0.001">
-    </div>
-
-    <div>
-      <label for="amp-sens-{{ .Ordinal }}">耳机灵敏度</label>
-      <input id="amp-sens-{{ .Ordinal }}" data-field="sens" type="number" value="105" step="0.1">
-    </div>
-
-    <div>
-      <label for="amp-sens-unit-{{ .Ordinal }}">灵敏度单位</label>
-      <select id="amp-sens-unit-{{ .Ordinal }}" data-field="sensUnit">
-        <option value="V">dB/V</option>
-        <option value="mW">dB/mW</option>
-      </select>
-    </div>
-
-    <div>
-      <label for="amp-spl-{{ .Ordinal }}">目标 SPL / dB</label>
-      <input id="amp-spl-{{ .Ordinal }}" data-field="spl" type="number" value="90" step="0.1">
-    </div>
-
-    <div>
-      <label for="amp-rout-{{ .Ordinal }}">耳放输出阻抗 / Ω</label>
-      <input id="amp-rout-{{ .Ordinal }}" data-field="rout" type="number" value="0.1" step="0.01" min="0">
-    </div>
+  <div class="amp-calculator__header">
+    <h3>耳放输出需求计算器</h3>
+    <p>根据听音电平、音乐动态和耳机参数，估算耳放所需的电压、电流、功率与增益。</p>
   </div>
 
-  <div class="amp-calculator__result" data-result aria-live="polite"></div>
+  <section class="amp-calculator__section">
+    <h4>音乐动态</h4>
+
+    <div class="amp-calculator__mode-tabs" role="tablist">
+      <button type="button" data-mode="manual" class="is-active">手动输入</button>
+      <button type="button" data-mode="roon">Roon</button>
+      <button type="button" data-mode="analysis">音频分析</button>
+    </div>
+
+    <div data-panel="manual">
+      <div class="amp-calculator__grid">
+        <label>
+          <span>动态余量</span>
+          <input data-headroom type="number" value="15" step="0.1" min="0">
+          <small>dB</small>
+        </label>
+      </div>
+      <p class="amp-calculator__note">
+        直接输入用于耳放峰值需求估算的动态余量。它不是严格定义的 Crest Factor。
+      </p>
+    </div>
+
+    <div data-panel="roon" hidden>
+      <div class="amp-calculator__grid">
+        <label>
+          <span>Roon Track Gain</span>
+          <input data-roon-gain type="number" value="-6" step="0.1">
+          <small>dB</small>
+        </label>
+
+        <label>
+          <span>Roon 目标响度</span>
+          <input data-roon-target type="number" value="-14" step="0.1">
+          <small>LUFS</small>
+        </label>
+
+        <label>
+          <span>True Peak</span>
+          <input data-roon-true-peak type="number" value="-1" step="0.1">
+          <small>dBTP</small>
+        </label>
+      </div>
+
+      <div class="amp-calculator__derived">
+        <span>估算 Integrated LUFS</span>
+        <strong data-roon-lufs>—</strong>
+        <span>峰值—综合响度差</span>
+        <strong data-roon-headroom>—</strong>
+      </div>
+
+      <p class="amp-calculator__note">
+        在 Roon 使用自身 R128 音频分析、目标为当前填写的目标响度，且 Track Gain 确实来自该分析时，可用
+        <code>目标响度 − Track Gain</code> 反推估算的 Integrated LUFS。
+        若 Roon 使用了导入的 ReplayGain 标签、Album Gain 或其他音频处理，这个反推关系不应视为原始文件 LUFS 的严格测量值。
+      </p>
+    </div>
+
+    <div data-panel="analysis" hidden>
+      <div class="amp-calculator__grid">
+        <label>
+          <span>Integrated LUFS</span>
+          <input data-analysis-lufs type="number" value="-14" step="0.1">
+          <small>LUFS</small>
+        </label>
+
+        <label>
+          <span>True Peak</span>
+          <input data-analysis-true-peak type="number" value="-1" step="0.1">
+          <small>dBTP</small>
+        </label>
+      </div>
+
+      <p class="amp-calculator__note">
+        使用 <code>True Peak − Integrated LUFS</code> 得到“峰值—综合响度差”估算值。
+        该数值不是严格定义的 Crest Factor。
+      </p>
+    </div>
+  </section>
+
+  <section class="amp-calculator__section">
+    <h4>听音电平</h4>
+
+    <div class="amp-calculator__grid">
+      <label>
+        <span>目标平均 SPL</span>
+        <input data-target-spl type="number" value="80" step="0.1" min="0">
+        <small>dB SPL</small>
+      </label>
+    </div>
+
+    <p class="amp-calculator__formula">
+      所需峰值 SPL = 目标平均 SPL + 动态余量
+    </p>
+  </section>
+
+  <section class="amp-calculator__section">
+    <h4>耳机</h4>
+
+    <div class="amp-calculator__grid">
+      <label>
+        <span>阻抗</span>
+        <input data-impedance type="number" value="32" step="0.1" min="0.1">
+        <small>Ω</small>
+      </label>
+
+      <label>
+        <span>灵敏度</span>
+        <input data-sensitivity type="number" value="100" step="0.1">
+        <select data-sensitivity-unit>
+          <option value="dbv">dB/V</option>
+          <option value="dbmw">dB/mW</option>
+        </select>
+      </label>
+
+      <label>
+        <span>耳放输出阻抗</span>
+        <input data-output-impedance type="number" value="0.5" step="0.1" min="0">
+        <small>Ω</small>
+      </label>
+    </div>
+  </section>
+
+  <section class="amp-calculator__section">
+    <h4>系统增益</h4>
+
+    <div class="amp-calculator__grid">
+      <label>
+        <span>DAC 满幅输出</span>
+        <input data-dac-full-scale type="number" value="4" step="0.01" min="0.001">
+        <small>Vrms @ 0 dBFS</small>
+      </label>
+
+      <label>
+        <span>系统总音量衰减</span>
+        <input data-system-attenuation type="number" value="0" step="0.1" max="0">
+        <small>dB</small>
+      </label>
+    </div>
+
+    <p class="amp-calculator__note">
+      “系统总音量衰减”表示从数字源满幅参考电平到当前系统实际输入电平之间的总衰减。
+      例如 Roon DSP Volume、播放器数字音量或其他数字域衰减应合并计算；如果使用硬件音量控制，则不应重复计入。
+    </p>
+  </section>
+
+  <section class="amp-calculator__results">
+    <h4>计算结果</h4>
+
+    <div class="amp-calculator__result-grid">
+      <div>
+        <span>动态余量</span>
+        <strong data-result-headroom>—</strong>
+        <small>dB</small>
+      </div>
+      <div>
+        <span>所需峰值 SPL</span>
+        <strong data-peak-spl>—</strong>
+        <small>dB SPL</small>
+      </div>
+      <div>
+        <span>耳机所需电压</span>
+        <strong data-load-voltage>—</strong>
+        <small>Vrms</small>
+      </div>
+      <div>
+        <span>耳机所需电流</span>
+        <strong data-load-current>—</strong>
+        <small>mArms</small>
+      </div>
+      <div>
+        <span>耳机所需功率</span>
+        <strong data-load-power>—</strong>
+        <small>mW</small>
+      </div>
+      <div>
+        <span>考虑输出阻抗后的耳放电压</span>
+        <strong data-amp-voltage>—</strong>
+        <small>Vrms</small>
+      </div>
+      <div>
+        <span>理论所需耳放增益</span>
+        <strong data-required-gain>—</strong>
+        <small>dB</small>
+      </div>
+    </div>
+
+    <p class="amp-calculator__status" data-status></p>
+  </section>
+
+  <p class="amp-calculator__footnote">
+    这是理想电阻模型下的估算。真实耳机阻抗随频率变化，音乐峰值也具有时间尺度，因此实际耳放选型还应检查最大电压、电流、功率以及保护/失真余量。
+  </p>
 </div>
 
-{{ if not (.Page.Scratch.Get "ampCalculatorAssetsLoaded") }}
-  {{ .Page.Scratch.Set "ampCalculatorAssetsLoaded" true }}
-  <link rel="stylesheet" href="{{ "css/amp-calculator.css" | relURL }}">
-  <script src="{{ "js/amp-calculator.js" | relURL }}" defer></script>
-{{ end }}
+{{- $css := resources.Get "css/amp-calculator.css" | resources.Minify | fingerprint -}}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}">
+<script src="{{ "js/amp-calculator.js" | relURL }}" defer></script>
