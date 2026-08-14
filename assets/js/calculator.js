@@ -89,7 +89,12 @@
       const ampVoltage = loadVoltage * (Rout + R) / R;
 
       // The total system attenuation reduces the DAC voltage available to the amp.
-      const effectiveDacVoltage = Vfs * Math.pow(10, systemAttenuation / 20);
+      // In Roon / analysis modes the track's True Peak (dBTP) also reduces the
+      // actual peak voltage the DAC outputs for this particular track.
+      const tpLinear = (mode === "roon" || mode === "analysis")
+        ? Math.pow(10, num(mode === "roon" ? "[data-roon-true-peak]" : "[data-analysis-true-peak]") / 20)
+        : 1;
+      const effectiveDacVoltage = Vfs * tpLinear * Math.pow(10, systemAttenuation / 20);
 
       const requiredGain = 20 * Math.log10(ampVoltage / effectiveDacVoltage);
 
