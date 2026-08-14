@@ -2,7 +2,7 @@
 title: Headphone Systems A Cloud-listener's Perspective
 description: 浅显云一下耳机系统
 slug: HSACP
-date: 2026-07-13 01:00:00+0000
+date: 2026-08-13 01:00:00+0000
 image: cover.jpg
 categories:
     - HiFi
