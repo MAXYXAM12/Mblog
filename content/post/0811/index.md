@@ -9156,9 +9156,7 @@ $$
 耳放领域还经常使用：
 
 $$
-\boxed{
-DF=\frac{Z_{HP}}{R_{out}}
-}
+\boxed{ DF=\frac{Z_{HP}}{R_{out}} }
 $$
 
 定义阻尼系数：
@@ -9360,9 +9358,7 @@ $$
 音圈在磁场中运动时，根据电磁感应会产生反电动势：
 
 $$
-\boxed{
-V_{emf}=Blv
-}
+\boxed{ V_{emf}=Blv }
 $$
 
 其中：
@@ -9533,17 +9529,13 @@ $$
 所以：
 
 $$
-I(t)
-=
-2\pi fC V_{peak}\cos(2\pi ft)
+I(t) = 2\pi fC V_{peak}\cos(2\pi ft)
 $$
 
 其峰值为：
 
 $$
-\boxed{
-I_{peak}=2\pi fCV_{peak}
-}
+\boxed{ I_{peak}=2\pi fCV_{peak} }
 $$
 
 这条公式非常重要，因为它说明：
@@ -9579,11 +9571,7 @@ $$
 那么：
 
 $$
-I_{peak}
-=
-2\pi\times100000
-\times10^{-8}
-\times100
+I_{peak} = 2\pi\times100000 \times10^{-8} \times100
 $$
 
 约为：
@@ -9764,25 +9752,13 @@ $$
 那么直流电流：
 
 $$
-I_{DC}
-=
-\frac{V_{DC}}{R}
-=
-\frac{0.1}{16}
-=
-6.25mA
+I_{DC} = \frac{V_{DC}}{R} = \frac{0.1}{16} = 6.25mA
 $$
 
 对应的直流功率：
 
 $$
-P_{DC}
-=
-\frac{V^2}{R}
-=
-\frac{0.1^2}{16}
-=
-0.625mW
+P_{DC} = \frac{V^2}{R} = \frac{0.1^2}{16} = 0.625mW
 $$
 
 0.625 mW 看起来并不大。
@@ -9824,11 +9800,7 @@ $$
 那么：
 
 $$
-I_{DC}
-=
-\frac{5}{16}
-=
-312.5mA
+I_{DC} = \frac{5}{16} = 312.5mA
 $$
 
 这是非常危险的故障状态。
@@ -10001,12 +9973,7 @@ $$
 
 那么：
 
-$$
-f_c
-=
-\frac{1}
-{2\pi\times16\times220\times10^{-6}}
-$$
+$$ f_c = \frac{1} {2\pi\times16\times220\times10^{-6}} $$
 
 约为：
 
@@ -10025,8 +9992,7 @@ $$
 那么所需电容：
 
 $$
-C=
-\frac{1}{2\pi Rf_c}
+C=\frac{1}{2\pi Rf_c}
 $$
 
 对于：
@@ -10072,27 +10038,9 @@ $$
 
 对于耳放这种直接连接人体佩戴设备的输出级，真正需要关注的是：
 
-$$
-DC\ Offset
-+
-Protection
-+
-Low\ Frequency\ Response
-+
-Output\ Impedance
-+
-Reliability
-$$
+$$ DC\ Offset + Protection + Low\ Frequency\ Response + Output\ Impedance + Reliability $$
 
-也就是说：
-
-```text
-音频性能
-      +
-故障安全
-```
-
-必须同时考虑。
+也就是说**音频性能**与**故障安全**必须同时考虑。
 
 ---
 
