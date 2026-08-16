@@ -11893,18 +11893,18 @@ XLR / 平衡耳机
 集成运放、分立晶体管与电子管之间不存在绝对的音质等级，它们是在一致性、电流能力、电压摆幅与设计自由度之间的工程选择。电子管在静电耳放中的常见性源于高压匹配，而非晶体管无法胜任。电源的任务是提供稳定、低噪声、低阻抗的能量，线性电源与开关电源无绝对的“音质等级”，关键看纹波频谱、PSRR与接地设计。分体与一体同样不存在普遍的优劣：分体在大功率、大热耗散与高电磁干扰场景下具有不可替代的隔离优势；一体则在信号路径连续性、电平匹配自由度与接地简洁性上更优。最终，耳放的评价应回归一组可验证的物理指标——增益结构、最大输出能力、压摆率、输出阻抗、THD/IMD、噪声、带宽与稳定性——而非任何发烧标签或拓扑审美。
 
 > 参考资料
-
- 1. Jason Stoddard, *The Most Abused Audio Terms: "Class A"*
+>
+> 1. Jason Stoddard, *The Most Abused Audio Terms: "Class A"*
+>  
+> <https://www.head-fi.org/threads/schiit-happened-the-story-of-the-worlds-most-improbable-start-up.701900/page-7224#post-17354025>
+>
+> 2. Jason Stoddard, *The Most Abused Audio Terms, Part 2: Balanced*
+> 
+> <https://www.head-fi.org/threads/schiit-happened-the-story-of-the-worlds-most-improbable-start-up.701900/page-7786#post-17518152>
+>
+> 3. Jason Stoddard, *The Most Abused Audio Terms, Part 3: Discrete*
    
-    https://www.head-fi.org/threads/schiit-happened-the-story-of-the-worlds-most-improbable-start-up.701900/page-7224#post-17354025
-
- 2. Jason Stoddard, *The Most Abused Audio Terms, Part 2: Balanced*
-   
-    https://www.head-fi.org/threads/schiit-happened-the-story-of-the-worlds-most-improbable-start-up.701900/page-7786#post-17518152
-
- 3. Jason Stoddard, *The Most Abused Audio Terms, Part 3: Discrete*
-   
-    https://www.head-fi.org/threads/schiit-happened-the-story-of-the-worlds-most-improbable-start-up.701900/page-7997#post-17603364
+> <https://www.head-fi.org/threads/schiit-happened-the-story-of-the-worlds-most-improbable-start-up.701900/page-7997#post-17603364>
 
  4. Jason Stoddard, *The Most Abused Audio Terms, Part 4: Feedback*
    
