@@ -11894,53 +11894,55 @@ XLR / 平衡耳机
 
 > **参考资料**:
 >
-> 1.Jason Stoddard, *The Most Abused Audio Terms: "Class A"*
+> **1.Jason Stoddard, *The Most Abused Audio Terms: "Class A"***
 >  
 > <https://www.head-fi.org/threads/schiit-happened-the-story-of-the-worlds-most-improbable-start-up.701900/page-7224#post-17354025>
 >
-> 2.Jason Stoddard, *The Most Abused Audio Terms, Part 2: Balanced*
+> **2.Jason Stoddard, *The Most Abused Audio Terms, Part 2: Balanced***
 > 
 > <https://www.head-fi.org/threads/schiit-happened-the-story-of-the-worlds-most-improbable-start-up.701900/page-7786#post-17518152>
 >
-> 3.Jason Stoddard, *The Most Abused Audio Terms, Part 3: Discrete*
+> **3.Jason Stoddard, *The Most Abused Audio Terms, Part 3: Discrete***
 >
 > <https://www.head-fi.org/threads/schiit-happened-the-story-of-the-worlds-most-improbable-start-up.701900/page-7997#post-17603364>
 >
-> 4. Jason Stoddard, *The Most Abused Audio Terms, Part 4: Feedback*
+> **4.Jason Stoddard, *The Most Abused Audio Terms, Part 4: Feedback***
 >
 > <https://www.head-fi.org/threads/schiit-happened-the-story-of-the-worlds-most-improbable-start-up.701900/page-9040#post-17911208>
 >
-> 5.Jason Stoddard, *The Most Abused Audio Terms, Part 5: Gain*
+> **5.Jason Stoddard, *The Most Abused Audio Terms, Part 5: Gain***
 >   
 > <https://www.head-fi.org/threads/schiit-happened-the-story-of-the-worlds-most-improbable-start-up.701900/page-10356#post-18185665>
 >
-> 6.Roon Labs, Volume Leveling / Audio Analysis
+> **6.Roon Labs, Volume Leveling / Audio Analysis**
 >   
 > <https://help.roonlabs.com/portal/en/kb/articles/faq-what-s-volume-leveling>
 >
-> 7.Roon Labs, Dynamic Range
+> **7.Roon Labs, Dynamic Range**
 >   
 > <https://help.roonlabs.com/portal/en/kb/articles/dynamic-range>
 >
-> 8.Apple Support, Sound Check
+> **8.Apple Support, Sound Check**
 >   
 > <https://support.apple.com/en-us/109331>
 >
-> 9.Matt Otten, *TIM (Transient Intermodulation Distortion) Analysis*
+> **9.Matt Otten, *TIM (Transient Intermodulation Distortion) Analysis***
 >   
 > <https://www.mattott.com/audio/tim-distortion>
 >
-> 10.Walt Jung, *Op Amp Applications Handbook*, Analog Devices, 2005
+> **10.Walt Jung, *Op Amp Applications Handbook*, Analog Devices, 2005**
 >
-> 11.Bob Cordell, *Designing Audio Power Amplifiers*, 2nd Edition, 2019
+> **11.Bob Cordell, *Designing Audio Power Amplifiers*, 2nd Edition, 2019**
 >
-> 12.Douglas Self, *Small Signal Audio Design*, 3th Edition, 2020
+> **12.Douglas Self, *Small Signal Audio Design*, 3th Edition, 2020**
 >
-> 13.Douglas Self, *Audio Power Amplifier Design*, 6th Edition, 2013
+> **13.Douglas Self, *Audio Power Amplifier Design*, 6th Edition, 2013**
 >
-> 14.ISO 226:2003, *Acoustics - Normal equal-loudness-level contours*
+> **14.ISO 226:2003, *Acoustics - Normal equal-loudness-level contours***
 
 ## 脑放
+
+未完待续...
 
 ## 解构烧友语言
 
