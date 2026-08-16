@@ -11763,8 +11763,6 @@ DAC 时钟对温度/磁场极度敏感（如外接原子钟、分立 R-2R NOS）
     └── 否 → 一体机（信号完整性与电平匹配更优）
 ```
 
----
-
 分体的不可替代性体现在**大功率、大热耗散、高电磁干扰**场景下。当物理耦合（热传导、磁场衰减、电源阻抗隔离）无法在单一体内部通过布局与屏蔽充分解决时，分体成为工程上的必然选择。
 
 然而，对于中等功率（<10 W）、现代高集成度 DAC 的应用场景，一体机通过优化的 PCB 分区、独立电源层与电平自由匹配，可以在信号连续性、接地简洁性与体积效率上实现更优的系统级表现。
@@ -11892,86 +11890,57 @@ XLR / 平衡耳机
 
 ### 耳放部分的核心结论
 
-耳放的本质不是"增加音质",而是把 DAC 已经产生的模拟信号,以足够低的噪声和失真转换成耳机所需要的**电压与电流**。高阻耳机主要考验电压摆幅,低阻耳机主要考验电流能力,而低阻低敏耳机则同时要求较高的电压、电流和功率余量;输出阻抗还会通过耳机阻抗曲线影响实际频率响应,因此"推得响"与"推得好"必须分开讨论。
-
-增益应该以**刚好能够在需要时达到最大无失真输出**为原则,而不是越高越好。过高增益会使音量控制长期处于大衰减区域,增加噪声、调节范围和声道匹配方面的压力;真正合理的系统应让 DAC 输出、数字/模拟衰减、耳放增益、耳机灵敏度和目标 SPL 共同匹配。Schiit 对增益的总结也可以概括为:**增益不足会导致系统无法达到最大输出,增益过高则容易带来噪声和较差的音量控制范围。**
-
-负反馈不是"好声音"或"坏声音"的开关,而是一种用开环增益换取线性度、带宽、低输出阻抗和低噪声的工程工具。真正需要关注的是反馈深度、环路带宽、相位裕度、稳定性以及实际测量结果;"零反馈"也只意味着缺少全局反馈,并不意味着电路内部没有任何反馈。
-
-压摆率是大信号瞬态能力的关键指标,它决定了放大器在满幅输出时能否忠实重现快速变化的波形。压摆率不足时,负反馈的效果也会大打折扣,可能引入瞬态互调失真。对于正常音频应用,现代耳放的压摆率通常不是瓶颈,但在选择低成本运放方案时需要验证。
-
-A 类、AB 类、D 类描述的是**输出级的工作方式和能量转换方式**,而不是音质等级。A 类的代价是静态功耗和散热,AB 类在效率与线性之间折中,D 类则通过高速开关获得高效率。Balanced 同样不是"XLR = 更好",真正的差分结构可以获得更高电压摆幅并降低部分共模噪声与串扰,但接口本身不能证明内部拓扑。
-
-电源的真正任务是提供稳定、低噪声并能够承受瞬态负载的能量。线性电源与开关电源没有绝对的音质等级,真正需要观察的是**纹波、PSRR、负载瞬态、噪声、EMI 与接地**。同样,分体 DAC 与耳放的价值主要在于电源、散热和电路隔离带来的设计自由度,而不是信号线越多越好。
-
-因此,一台耳放最终应该从一条完整的工程链判断:
-
-```text
-输入电平
-   ↓
-增益
-   ↓
-音量衰减
-   ↓
-最大电压
-   ↓
-最大电流
-   ↓
-压摆率
-   ↓
-输出阻抗
-   ↓
-耳机阻抗曲线
-   ↓
-耳机灵敏度
-   ↓
-目标 SPL
-   ↓
-THD / IMD / 噪声 / 串扰 / 稳定性
-   ↓
-实际听音
-```
-
-> **耳放真正需要做到的,不是拥有某个"高级拓扑"或某个"发烧标签",而是在实际负载和实际听音电平下,以足够的电压、电流和动态余量驱动耳机,同时把增益、噪声、输出阻抗、失真、压摆率、反馈、供电和稳定性控制在可验证的范围内。**
+耳放的本质不是“调味剂”或“推力放大器”，而是 DAC 与耳机之间的电气接口。耳放真正需要做到的，不是拥有某个“高级拓扑”或某个“发烧标签”，而是在实际负载和实际听音电平下，把增益、噪声、输出阻抗、失真、压摆率、反馈、供电和稳定性控制在可验证的范围内。
 
 ---
 
-### 参考资料
+> 参考资料
 
-1. Jason Stoddard, *The Most Abused Audio Terms: "Class A"*
-   https://www.head-fi.org/threads/schiit-happened-the-story-of-the-worlds-most-improbable-start-up.701900/page-7224#post-17354025
+ 1. Jason Stoddard, *The Most Abused Audio Terms: "Class A"*
+   
+    https://www.head-fi.org/threads/schiit-happened-the-story-of-the-worlds-most-improbable-start-up.701900/page-7224#post-17354025
 
-2. Jason Stoddard, *The Most Abused Audio Terms, Part 2: Balanced*
-   https://www.head-fi.org/threads/schiit-happened-the-story-of-the-worlds-most-improbable-start-up.701900/page-7786#post-17518152
+ 2. Jason Stoddard, *The Most Abused Audio Terms, Part 2: Balanced*
+   
+    https://www.head-fi.org/threads/schiit-happened-the-story-of-the-worlds-most-improbable-start-up.701900/page-7786#post-17518152
 
-3. Jason Stoddard, *The Most Abused Audio Terms, Part 3: Discrete*
-   https://www.head-fi.org/threads/schiit-happened-the-story-of-the-worlds-most-improbable-start-up.701900/page-7997#post-17603364
+ 3. Jason Stoddard, *The Most Abused Audio Terms, Part 3: Discrete*
+   
+    https://www.head-fi.org/threads/schiit-happened-the-story-of-the-worlds-most-improbable-start-up.701900/page-7997#post-17603364
 
-4. Jason Stoddard, *The Most Abused Audio Terms, Part 4: Feedback*
-   https://www.head-fi.org/threads/schiit-happened-the-story-of-the-worlds-most-improbable-start-up.701900/page-9040#post-17911208
+ 4. Jason Stoddard, *The Most Abused Audio Terms, Part 4: Feedback*
+   
+    https://www.head-fi.org/threads/schiit-happened-the-story-of-the-worlds-most-improbable-start-up.701900/page-9040#post-17911208
 
-5. Jason Stoddard, *The Most Abused Audio Terms, Part 5: Gain*
-   https://www.head-fi.org/threads/schiit-happened-the-story-of-the-worlds-most-improbable-start-up.701900/page-10356#post-18185665
+ 5. Jason Stoddard, *The Most Abused Audio Terms, Part 5: Gain*
+   
+    https://www.head-fi.org/threads/schiit-happened-the-story-of-the-worlds-most-improbable-start-up.701900/page-10356#post-18185665
 
-6. Roon Labs, Volume Leveling / Audio Analysis
-   https://help.roonlabs.com/portal/en/kb/articles/faq-what-s-volume-leveling
+ 6. Roon Labs, Volume Leveling / Audio Analysis
+   
+    https://help.roonlabs.com/portal/en/kb/articles/faq-what-s-volume-leveling
 
-7. Roon Labs, Dynamic Range
-   https://help.roonlabs.com/portal/en/kb/articles/dynamic-range
+ 7. Roon Labs, Dynamic Range
+   
+    https://help.roonlabs.com/portal/en/kb/articles/dynamic-range
 
-8. Apple Support, Sound Check
-   https://support.apple.com/en-us/109331
+ 8. Apple Support, Sound Check
+   
+    https://support.apple.com/en-us/109331
 
-9. Matt Otten, *TIM (Transient Intermodulation Distortion) Analysis*
-   https://www.mattott.com/audio/tim-distortion/
+ 9. Matt Otten, *TIM (Transient Intermodulation Distortion) Analysis*
+   
+    https://www.mattott.com/audio/tim-distortion/
 
-10. Walt Jung, *Op Amp Applications Handbook*, Analog Devices, 2005
+ 10. Walt Jung, *Op Amp Applications Handbook*, Analog Devices, 2005
 
-11. Bob Cordell, *Designing Audio Power Amplifiers*, 2nd Edition, 2019
+ 11. Bob Cordell, *Designing Audio Power Amplifiers*, 2nd Edition, 2019
 
-12. Douglas Self, *Audio Power Amplifier Design*, 6th Edition, 2013
+ 12. Douglas Self, *Small Signal Audio Design*, 3th Edition, 2020
 
-13. ISO 226:2003, *Acoustics - Normal equal-loudness-level contours*
+ 13. Douglas Self, *Audio Power Amplifier Design*, 6th Edition, 2013
+
+ 14. ISO 226:2003, *Acoustics - Normal equal-loudness-level contours*
 
 ## 脑放
 
