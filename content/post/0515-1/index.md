@@ -42,7 +42,7 @@ magnet:?xt=urn:btih:650FB22C46EDF10E151AF60860340FC2FA8116F6&dn=Roon 2.65.1653
 HQPlayer Desktop 6.0.1:
 
 ```bash
-<https://www.mediafire.com/folder/nh7znwzbyhgx4/HQPlayer+Desktop>
+https://www.mediafire.com/folder/nh7znwzbyhgx4/HQPlayer+Desktop
 ```
 
 HQPlayer Desktop 5.17.1:
