@@ -27,10 +27,22 @@ weight: 1       # You can add weight to some posts to override the default sorti
 
 ## 下载
 
+Roon 2.70(1671)：
+
+```bash
+magnet:?xt=urn:btih:246BAF8D87279B629E06341CEBAFFBD6BDFA1478&tr=http%3A%2F%2Fbt3.t-ru.org%2Fann%3Fmagnet&dn=Roon%202.70%20Build%201671%20x64%20%5B2026%2C%20Multi%20%2B%20RUS%5D
+```
+
 Roon 2.65(1653)：
 
 ```bash
 magnet:?xt=urn:btih:650FB22C46EDF10E151AF60860340FC2FA8116F6&dn=Roon 2.65.1653
+```
+
+HQPlayer Desktop 6.0.1:
+
+```bash
+<https://www.mediafire.com/folder/nh7znwzbyhgx4/HQPlayer+Desktop>
 ```
 
 HQPlayer Desktop 5.17.1:
