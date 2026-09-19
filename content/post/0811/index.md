@@ -51,7 +51,7 @@ math: true
   - **位深**（如16bit、24bit）：决定动态范围（~6dB/bit，16bit≈96dB）
 - **特点**：复制无损，但存在量化误差；需要重建滤波器将离散信号恢复为连续波形
 
-> **数字音乐的文件格式**：PCM 与 DSD 是两大流派，前者 多 bit，后者 1bit。PCM 原始格式为 `.wav`，FLAC 与 ALAC 编码是无损压缩。老烧认为能听出 `.wav` 与 `.flac` 区别是荒谬的——无损压缩是可逆的，两者解码出的 **PCM 数据逐比特一致**（注意：一致的是解码后的音频数据，两个文件本身的哈希值当然不同）。若能听出区别，说明系统保真度堪忧。`.m4a` 容器可以封装 AAC 有损编码和 ALAC 无损编码，大多来自 Apple Music。Apple Music 的音源文件通常与其他流媒体存在微笑区别。
+> **数字音乐的文件格式**：PCM 与 DSD 是两大流派，前者 多 bit，后者 1bit。PCM 原始格式为 `.wav`，FLAC 与 ALAC 编码是无损压缩。老烧认为能听出 `.wav` 与 `.flac` 区别是荒谬的——无损压缩是可逆的，两者解码出的 **PCM 数据逐比特一致**（注意：一致的是解码后的音频数据，两个文件本身的哈希值当然不同）。若能听出区别，说明系统保真度堪忧。`.m4a` 容器可以封装 AAC 有损编码和 ALAC 无损编码，大多来自 Apple Music。Apple Music 的音源文件通常与其他流媒体存在微小区别。
 
 **为什么 16bit 44.1kHz 已经足够保真：**
 
@@ -171,8 +171,8 @@ math: true
 - UPnP/DLNA、AirPlay 2（ALAC编码）、Roon RAAT（专有低延迟协议）
 - MQA：折叠高频信息至较低采样率容器，本质是有损编码，其"无损"宣传长期存在争议；MQA Ltd 已于 2023 年进入破产管理并被 Lenbrook 收购，Tidal 等主要平台已转向 FLAC，属于正在退场的格式
 
-### 参考资料
-
+> **参考资料:**
+>
 > **1.Ken C. Pohlmann, *Principles of Digital Audio*, 6th Edition, McGraw-Hill, 2010**
 >
 > **2.H. Nyquist, "Certain Topics in Telegraph Transmission Theory", *Trans. AIEE*, 1928**
@@ -1318,19 +1318,15 @@ DAC核心
 
 **它们把精度、噪声、失真、滤波和实现难度分配到了信号链的不同位置。**
 
-一个可用的工程锚点是 **SINAD**（信号与噪声加失真比，即 THD+N 的倒数表达）。公开测量数据显示，百元至千元级的现代 ΔΣ DAC 即可实现 SINAD > 100dB，远超任何可闻阈值。当频响平直、SINAD 达标、输出阻抗足够低时，DAC 对声音的贡献在声学上可视为**透明**——此时听出的"差异"更多来自电平匹配误差与心理预期，而非器件本身。这是"DAC 已是被解决的问题"这一判断的可测量依据。
-
-> 拓展阅读：<https://dcsaudio.com/assets/dCS-Ring-DAC-Explained.pdf>
-
-### 参考资料
-
+> **参考资料:**
+>
 > **1.Ken C. Pohlmann, *Principles of Digital Audio*, 6th Edition, McGraw-Hill, 2010**
 >
 > **2.Walt Kester (ed.), *The Data Conversion Handbook*, Analog Devices / Newnes, 2005**
 >
 > **3.Richard Schreier & Gabor C. Temes, *Understanding Delta-Sigma Data Converters*, Wiley, 2005**
 >
-> **4.dCS, *Ring DAC Explained*（见上文链接）**
+> **4.dCS, *Ring DAC Explained* <https://dcsaudio.com/assets/dCS-Ring-DAC-Explained.pdf>**
 
 ## DSP：以 HQPlayer 为例
 
@@ -1686,8 +1682,8 @@ DAC 硬件
 
 > DSP 不是"调味剂"，而是信号重建链路的最后一段数字优化。所有参数选择都应回归到可测量的目标：降低带内噪声、消除镜像、补偿物理系统缺陷、防止调制器过载。脱离测量数据的"听感描述"，往往只是大脑对特定时域振铃或频响倾斜的适应性反应。
 
-### 参考资料
-
+> **参考资料:**
+>
 > **1.HQPlayer 官方手册（Signalyst），滤波器/调制器/字长缩减章节**
 >
 > **2.A. V. Oppenheim & R. W. Schafer, *Discrete-Time Signal Processing*, 3rd Edition, Pearson, 2009**
@@ -7522,8 +7518,8 @@ $$
 
 > **耳机设计本质上不是追求某一个参数的极致，而是在运动质量、驱动力、位移、线性度、声学负载和人体耦合之间进行整体优化。换能器的技术类型只是实现这一目标的手段，最终仍应回到实际测量结果，而不是技术标签本身。**
 
-### 参考资料
-
+> **参考资料:**
+>
 > **1.Floyd E. Toole, *Sound Reproduction: The Acoustics and Psychoacoustics of Loudspeakers and Rooms*, 3rd Edition, Focal Press, 2017**
 >
 > **2.Sean Olive, Todd Welti 等, Harman 耳机目标曲线系列论文（AES, 2013–2018）**
@@ -7534,7 +7530,7 @@ $$
 
 ## 耳放
 
-耳放并不是"把声音变大"的黑盒子,而是 DAC 输出与耳机之间的桥梁。
+耳放并不是"把声音变大"的黑盒子，而是 DAC 输出与耳机之间的桥梁。
 
 ### 为什么 DAC 不能直推
 
