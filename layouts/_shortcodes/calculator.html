@@ -8,12 +8,12 @@
     <h4>音乐动态</h4>
 
     <div class="amp-calculator__mode-tabs" role="tablist">
-      <button type="button" data-mode="roon">Roon</button>
-      <button type="button" data-mode="manual" class="is-active">手动输入</button>
-      <button type="button" data-mode="analysis">音频分析</button>
+      <button type="button" role="tab" aria-selected="false" data-mode="roon">Roon</button>
+      <button type="button" role="tab" aria-selected="true" data-mode="manual" class="is-active">手动输入</button>
+      <button type="button" role="tab" aria-selected="false" data-mode="analysis">分析数据</button>
     </div>
 
-    <div data-panel="manual">
+    <div data-panel="manual" role="tabpanel">
       <div class="amp-calculator__grid">
         <label>
           <span>动态余量</span>
@@ -23,10 +23,11 @@
       </div>
       <p class="amp-calculator__note">
         直接输入用于耳放峰值需求估算的动态余量。它不是严格定义的 Crest Factor。
+        电压与增益计算以 0 dBFS 作为源峰值参考，不代表已测得实际音频的 True Peak。
       </p>
     </div>
 
-    <div data-panel="roon" hidden>
+    <div data-panel="roon" role="tabpanel" hidden>
       <div class="amp-calculator__grid">
         <label>
           <span>Roon Track Gain</span>
@@ -35,13 +36,13 @@
         </label>
 
         <label>
-          <span>Roon EBU R128标准</span>
-          <input data-roon-target type="number" value="-23" step="0.1">
+          <span>Roon 目标响度</span>
+          <input data-roon-target type="number" value="-14" step="0.1">
           <small>LUFS</small>
         </label>
 
         <label>
-          <span>True Peak</span>
+          <span>源 True Peak</span>
           <input data-roon-true-peak type="number" value="-1" step="0.1">
           <small>dBTP</small>
         </label>
@@ -58,10 +59,11 @@
         在 Roon 使用自身 R128 音频分析、目标为当前填写的目标响度，且 Track Gain 确实来自该分析时，可用
         <code>目标响度 − Track Gain</code> 反推估算的 Integrated LUFS。
         若 Roon 使用了导入的 ReplayGain 标签、Album Gain 或其他音频处理，这个反推关系不应视为原始文件 LUFS 的严格测量值。
+        Track Gain 在这里只用于反推响度；下方数字衰减请填写 DAC 前实际额外应用的衰减，避免重复计算。
       </p>
     </div>
 
-    <div data-panel="analysis" hidden>
+    <div data-panel="analysis" role="tabpanel" hidden>
       <div class="amp-calculator__grid">
         <label>
           <span>Integrated LUFS</span>
@@ -70,15 +72,15 @@
         </label>
 
         <label>
-          <span>True Peak</span>
+          <span>源 True Peak</span>
           <input data-analysis-true-peak type="number" value="-1" step="0.1">
           <small>dBTP</small>
         </label>
       </div>
 
       <p class="amp-calculator__note">
-        使用 <code>True Peak − Integrated LUFS</code> 得到“峰值—综合响度差”估算值。
-        该数值不是严格定义的 Crest Factor。
+        在此填写外部音频分析工具已经给出的结果；当前版本不会上传或读取音频文件。
+        使用 <code>True Peak − Integrated LUFS</code> 得到“峰值—综合响度差”估算值，它不是严格定义的 Crest Factor。
       </p>
     </div>
   </section>
@@ -133,19 +135,30 @@
       <label>
         <span>DAC 满幅输出</span>
         <input data-dac-full-scale type="number" value="4" step="0.01" min="0.001">
-        <small>Vrms @ 0 dBFS</small>
+        <small>Vrms @ 0 dBFS（正弦等效）</small>
       </label>
 
       <label>
-        <span>总音量衰减</span>
-        <input data-system-attenuation type="number" value="0" step="0.1" max="0">
+        <span>数字衰减（DAC 前）</span>
+        <input data-digital-attenuation type="number" value="0" step="0.1" max="0">
+        <small>dB</small>
+      </label>
+
+      <label>
+        <span>模拟衰减（DAC 后）</span>
+        <input data-analog-attenuation type="number" value="0" step="0.1" max="0">
         <small>dB</small>
       </label>
     </div>
 
     <p class="amp-calculator__note">
-      “总音量衰减”包含数字音量衰减和模拟音量衰减
+      数字衰减改变 DAC 前的信号与估算 True Peak；模拟衰减只改变 DAC 后的电压，不能修复上游已经产生的削波。两项均填写不大于 0 dB 的数值。
     </p>
+
+    <div class="amp-calculator__peak-warning" data-peak-warning role="alert" hidden>
+      <p data-peak-warning-text></p>
+      <button type="button" data-apply-digital-attenuation>先应用 −3 dB 数字衰减</button>
+    </div>
   </section>
 
   <section class="amp-calculator__results">
@@ -161,6 +174,16 @@
         <span>所需峰值 SPL</span>
         <strong data-peak-spl>—</strong>
         <small>dB SPL</small>
+      </div>
+      <div>
+        <span>数字衰减后估算 True Peak</span>
+        <strong data-post-digital-true-peak>—</strong>
+        <small>dBTP</small>
+      </div>
+      <div>
+        <span>系统总衰减</span>
+        <strong data-total-attenuation>—</strong>
+        <small>dB</small>
       </div>
       <div>
         <span>耳机所需电压</span>
@@ -189,11 +212,11 @@
       </div>
     </div>
 
-    <p class="amp-calculator__status" data-status></p>
+    <p class="amp-calculator__status" data-status aria-live="polite"></p>
   </section>
 
   <p class="amp-calculator__footnote">
-    这是理想电阻模型下的估算。真实耳机阻抗随频率变化，音乐峰值也具有时间尺度，因此实际耳放选型还应检查最大电压、电流、功率以及保护/失真余量。
+    这是理想电阻、单频率点模型下的峰值余量估算，不是经耳模拟器校准的实际 SPL 预测。DAC 电压按满幅正弦等效值处理；真实耳机阻抗随频率变化，音乐峰值也具有时间尺度，因此实际选型还应检查最大电压、电流、功率以及保护／失真余量。
   </p>
 </div>
 
