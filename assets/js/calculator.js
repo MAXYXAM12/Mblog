@@ -284,7 +284,7 @@
         setText("[data-load-current]", fixed(result.loadCurrentMa, 2));
         setText("[data-load-power]", fixed(result.loadPowerMw, 2));
         setText("[data-amp-voltage]", fixed(result.ampVoltage, 3));
-        setText("[data-required-gain]", fixed(result.requiredGain, 1));
+        setText("[data-required-gain]", fixed(result.requiredGain, 2));
 
         if (mode === "roon") {
           setText("[data-roon-lufs]", `${fixed(result.integratedLufs, 1)} LUFS`);
