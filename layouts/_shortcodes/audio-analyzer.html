@@ -1,0 +1,87 @@
+<div class="audio-analyzer" data-audio-analyzer>
+  <div class="audio-analyzer__header">
+    <h3>本地音频响度分析器</h3>
+    <p>
+      上传音频文件，在浏览器本地计算 Integrated LUFS、True Peak（dBTP）、
+      峰值—响度差（PLR）与响度范围（LRA）。分析完全在本机完成，文件不会被上传。
+    </p>
+  </div>
+
+  <div class="audio-analyzer__dropzone" data-dropzone tabindex="0" role="button"
+       aria-label="选择或拖入音频文件">
+    <input type="file" data-file-input accept="audio/*,.wav,.flac,.mp3,.aac,.ogg,.m4a,.opus" hidden>
+    <p><strong>点击选择文件</strong>或将音频拖到这里</p>
+    <p class="audio-analyzer__hint">支持浏览器可解码的常见格式（WAV / FLAC / MP3 / AAC / Ogg 等）</p>
+  </div>
+
+  <div class="audio-analyzer__progress" data-progress-wrap hidden>
+    <div class="audio-analyzer__progress-bar">
+      <div class="audio-analyzer__progress-fill" data-progress-fill></div>
+    </div>
+    <p class="audio-analyzer__status" data-status aria-live="polite"></p>
+  </div>
+
+  <section class="audio-analyzer__results" data-results hidden>
+    <h4>分析结果</h4>
+    <p class="audio-analyzer__meta" data-meta></p>
+
+    <div class="audio-analyzer__result-grid">
+      <div>
+        <span>Integrated LUFS</span>
+        <strong data-result-integrated>—</strong>
+        <small>积分响度（双门限）</small>
+      </div>
+      <div>
+        <span>True Peak</span>
+        <strong data-result-true-peak>—</strong>
+        <small>dBTP（4× 过采样）</small>
+      </div>
+      <div>
+        <span>峰值—响度差</span>
+        <strong data-result-plr>—</strong>
+        <small>PLR，dB（= dBTP − LUFS）</small>
+      </div>
+      <div>
+        <span>响度范围</span>
+        <strong data-result-lra>—</strong>
+        <small>LRA，LU（P95 − P10）</small>
+      </div>
+      <div>
+        <span>Momentary 最大</span>
+        <strong data-result-momentary>—</strong>
+        <small>400 ms 窗口峰值响度</small>
+      </div>
+      <div>
+        <span>Short-term 最大</span>
+        <strong data-result-short-term>—</strong>
+        <small>3 s 窗口峰值响度</small>
+      </div>
+    </div>
+
+    <p class="audio-analyzer__warning" data-peak-warning hidden></p>
+
+    <div class="audio-analyzer__chart-wrap">
+      <h4>Momentary 响度时间线</h4>
+      <canvas data-chart height="180"></canvas>
+    </div>
+  </section>
+
+  <p class="audio-analyzer__error" data-error role="alert" hidden></p>
+
+  <p class="audio-analyzer__footnote">
+    实现依据 ITU-R BS.1770（K 加权、400 ms 块、绝对门限 −70 LUFS、相对门限 −10 LU）
+    与 EBU Tech 3342（3 s Short-term、LRA 绝对门限 −70 LUFS、相对门限 −20 LU、
+    10%–95% 百分位）。测量采样率 48 kHz；True Peak 在原始采样率下做 4× sinc 过采样插值。
+    参考点：满幅 1 kHz 正弦立体声 = 0 LUFS，且其 PLR ≈ 0 dB——PLR 描述的是
+    峰值高于长期响度的程度，动态越大的音乐 PLR 越大。
+  </p>
+</div>
+
+{{- $css := resources.Get "css/audio-analyzer.css" | minify | fingerprint -}}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}">
+
+{{- $core := resources.Get "js/audio-analyzer-core.js" | minify | fingerprint -}}
+<script src="{{ $core.RelPermalink }}"></script>
+
+{{- $js := resources.Get "js/audio-analyzer.js" | minify | fingerprint -}}
+<script src="{{ $js.RelPermalink }}"></script>
