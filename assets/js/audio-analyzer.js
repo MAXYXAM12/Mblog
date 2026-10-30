@@ -27,15 +27,104 @@
     return `${m}:${s.padStart(4, "0")}`;
   }
 
+  /*
+   * Chrome 中同时传成功/失败回调会走传统解码路径，对部分修复后的 FLAC
+   * 会错误拒绝；纯 Promise 形式则正常。因此先探测支持情况，二选一。
+   */
+  const TINY_WAV = new Uint8Array([
+    0x52, 0x49, 0x46, 0x46, 0x28, 0x00, 0x00, 0x00, 0x57, 0x41, 0x56, 0x45,
+    0x66, 0x6d, 0x74, 0x20, 0x10, 0x00, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00,
+    0x40, 0x1f, 0x00, 0x00, 0x40, 0x1f, 0x00, 0x00, 0x01, 0x00, 0x08, 0x00,
+    0x64, 0x61, 0x74, 0x61, 0x04, 0x00, 0x00, 0x00, 0x80, 0x80, 0x80, 0x80
+  ]);
+  let promiseDecodeSupported = null;
+
+  async function detectPromiseDecode(AudioContextCtor) {
+    if (promiseDecodeSupported !== null) return promiseDecodeSupported;
+    const probe = new AudioContextCtor();
+    try {
+      await probe.decodeAudioData(TINY_WAV.slice(0).buffer);
+      promiseDecodeSupported = true;
+    } catch (error) {
+      promiseDecodeSupported = false;
+    }
+    probe.close().catch(() => {});
+    return promiseDecodeSupported;
+  }
+
+  async function decodeBuffer(AudioContextCtor, ctx, bytes) {
+    if (await detectPromiseDecode(AudioContextCtor)) {
+      return ctx.decodeAudioData(bytes);
+    }
+    // 旧版 WebKit（Safari < 15）只支持回调形式
+    return new Promise((resolve, reject) => {
+      ctx.decodeAudioData(bytes, resolve, reject);
+    });
+  }
+
+  function isSafariEngine() {
+    const ua = navigator.userAgent;
+    return /Safari\//.test(ua) && !/Chrome\//.test(ua) && !/Chromium\//.test(ua) && !/Edg\//.test(ua);
+  }
+
+  /*
+   * 解码文件；失败时若是 FLAC，尝试自动修复（ID3 前缀 / 非标准内嵌图片块）后重试。
+   * 返回 { buffer, repaired }。
+   */
   async function decodeFile(file) {
     const AudioContextCtor = window.AudioContext || window.webkitAudioContext;
-    const ctx = new AudioContextCtor();
+    const bytes = await file.arrayBuffer();
+    // decodeAudioData 会分离（detach）传入的 ArrayBuffer，保留副本供修复路径使用
+    const bytesCopy = bytes.slice(0);
+    let ctx = new AudioContextCtor();
     try {
-      const bytes = await file.arrayBuffer();
-      return await ctx.decodeAudioData(bytes);
+      const buffer = await decodeBuffer(AudioContextCtor, ctx, bytes);
+      return { buffer, repaired: false };
+    } catch (firstError) {
+      // 某些浏览器在同一 AudioContext 解码失败后会拒绝后续解码，重试用新上下文
+      ctx.close().catch(() => {});
+      let repaired = null;
+      try {
+        repaired = core.repairFlacContainer(new Uint8Array(bytesCopy));
+      } catch (repairError) {
+        console.error("FLAC 修复失败", repairError);
+      }
+      if (!repaired) throw firstError;
+      ctx = new AudioContextCtor();
+      const buffer = await decodeBuffer(AudioContextCtor, ctx, repaired.slice(0).buffer);
+      return { buffer, repaired: true };
     } finally {
       ctx.close().catch(() => {});
     }
+  }
+
+  // 读取文件头识别实际封装，用于解码失败时给出可操作的诊断
+  async function sniffContainer(file) {
+    const head = new Uint8Array(await file.slice(0, 16).arrayBuffer());
+    const ascii = (from, len) => String.fromCharCode(...head.slice(from, from + len));
+    if (ascii(0, 4) === "fLaC") return "FLAC";
+    if (ascii(0, 4) === "RIFF" && ascii(8, 4) === "WAVE") return "WAV";
+    if (ascii(0, 4) === "OggS") return "Ogg";
+    if (ascii(0, 3) === "ID3" || (head[0] === 0xff && (head[1] & 0xe0) === 0xe0)) return "MP3";
+    if (ascii(4, 4) === "ftyp") return "MP4/M4A";
+    return "未知";
+  }
+
+  async function decodeGuidance(file) {
+    const ext = (file.name.split(".").pop() || "").toLowerCase();
+    let sniffed = "未知";
+    try {
+      sniffed = await sniffContainer(file);
+    } catch (error) {
+      console.error("文件头嗅探失败", error);
+    }
+    const safariNote = isSafariEngine()
+      ? "当前是 Safari/WebKit 内核：不支持 FLAC、Ogg/Vorbis、Opus，请改用 WAV、MP3 或 AAC（m4a）。"
+      : "Chrome/Edge 支持 WAV、FLAC、MP3、AAC、Ogg；罕见格式（WMA、ALAC、DSD 等）请先转换为 WAV 或 FLAC。";
+    const mismatch = sniffed !== "未知" && sniffed.toLowerCase() !== ext && ext !== "m4a"
+      ? `注意：扩展名是 .${ext}，但文件头实际为 ${sniffed}——文件可能损坏、被改名，或带有加密封装（如某些平台下载的 .mflac/.ncm）。`
+      : "";
+    return `无法解码 ${file.name}（检测到文件头：${sniffed}）。${mismatch}${safariNote}`;
   }
 
   /*
@@ -82,8 +171,9 @@
   }
 
   async function analyzeFile(file, onProgress) {
-    const decoded = await decodeFile(file);
-    return analyzeBuffer(decoded, onProgress);
+    const { buffer, repaired } = await decodeFile(file);
+    const result = await analyzeBuffer(buffer, onProgress);
+    return { result, repaired };
   }
 
   function drawChart(canvas, result) {
@@ -218,7 +308,7 @@
       status.textContent = "正在解码音频…";
 
       try {
-        const result = await analyzeFile(file, (fraction, phase) => {
+        const { result, repaired } = await analyzeFile(file, (fraction, phase) => {
           const percent = Math.round(fraction * 100);
           progressFill.style.width = `${percent}%`;
           status.textContent = phase === "true-peak"
@@ -245,12 +335,15 @@
         }
 
         results.hidden = false;
-        status.textContent = "分析完成。";
+        status.textContent = repaired
+          ? "分析完成。已自动修复 FLAC 元数据（移除前置标签或损坏的内嵌图片块）后成功解码。"
+          : "分析完成。";
         progressFill.style.width = "100%";
         requestAnimationFrame(() => drawChart(chart, result));
       } catch (error) {
         console.error(error);
-        showError(`分析失败：${error.message || "无法解码该文件，请尝试 WAV / FLAC / MP3 格式。"}`);
+        const isDecodeFailure = /decode/i.test(String(error && error.message));
+        showError(isDecodeFailure ? await decodeGuidance(file) : `分析失败：${error.message || "未知错误"}`);
         status.textContent = "";
       } finally {
         busy = false;

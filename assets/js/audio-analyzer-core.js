@@ -346,6 +346,104 @@
     };
   }
 
+  /*
+   * FLAC 容器修复（纯字节操作，供解码失败时重试）。
+   *
+   * 处理两类会卡死浏览器解码器的问题：
+   * 1) 文件头前有 ID3v2 标签（Chrome 找不到 fLaC 魔数）；
+   * 2) 非标准/损坏的 PICTURE 元数据块（如缺 mimetype 的封面，
+   *    Chrome 直接拒绝整个文件——即使音频流本身完好）。
+   *
+   * 返回修复后的新字节；无需修复或无法修复时返回 null。
+   */
+  const FLAC_BLOCK_STREAMINFO = 0;
+  const FLAC_BLOCK_APPLICATION = 2;
+  const FLAC_BLOCK_SEEKTABLE = 3;
+  const FLAC_BLOCK_VORBIS_COMMENT = 4;
+  const FLAC_BLOCK_CUESHEET = 5;
+  const FLAC_BLOCK_PICTURE = 6;
+
+  function findFlacOffset(head) {
+    // ID3v2：按同步安全整数计算标签大小
+    if (head[0] === 0x49 && head[1] === 0x44 && head[2] === 0x33 && head.length >= 10) {
+      const tagSize = ((head[6] & 0x7f) << 21) | ((head[7] & 0x7f) << 14)
+        | ((head[8] & 0x7f) << 7) | (head[9] & 0x7f);
+      let offset = 10 + tagSize;
+      if (head[5] & 0x10) offset += 10; // ID3v2.4 footer
+      if (offset + 4 <= head.length
+        && head[offset] === 0x66 && head[offset + 1] === 0x4c
+        && head[offset + 2] === 0x61 && head[offset + 3] === 0x43) {
+        return offset;
+      }
+    }
+    // 否则在前 32 MB 内扫描魔数（覆盖巨型内嵌标签）
+    const limit = Math.min(head.length - 3, 32 * 1024 * 1024);
+    for (let i = 0; i < limit; i += 1) {
+      if (head[i] === 0x66 && head[i + 1] === 0x4c
+        && head[i + 2] === 0x61 && head[i + 3] === 0x43) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  function repairFlacContainer(bytes) {
+    if (!(bytes instanceof Uint8Array) || bytes.length < 8) return null;
+    const offset = findFlacOffset(bytes);
+    if (offset < 0) return null;
+
+    const view = new DataView(bytes.buffer, bytes.byteOffset + offset, bytes.length - offset);
+    if (view.getUint32(0) !== 0x664c6143) return null; // "fLaC"
+
+    // 解析元数据块序列
+    const blocks = [];
+    let position = 4;
+    let sawPicture = false;
+    let streaminfo = null;
+    for (;;) {
+      if (position + 4 > view.byteLength) return null; // 截断/非 FLAC
+      const isLast = (view.getUint8(position) & 0x80) !== 0;
+      const type = view.getUint8(position) & 0x7f;
+      const length = view.getUint32(position) & 0x00ffffff;
+      position += 4;
+      if (position + length > view.byteLength) return null;
+      const block = new Uint8Array(view.buffer, view.byteOffset + position, length);
+      if (type === FLAC_BLOCK_STREAMINFO && length === 34 && !streaminfo) {
+        streaminfo = new Uint8Array(block); // 必须保留且保持首位
+      } else if (type === FLAC_BLOCK_PICTURE) {
+        sawPicture = true; // 丢弃问题图片块
+      } else if (type !== FLAC_BLOCK_STREAMINFO) {
+        blocks.push({ type, data: new Uint8Array(block) });
+      }
+      position += length;
+      if (isLast) break;
+    }
+    if (!streaminfo) return null;
+    if (!sawPicture && offset === 0) return null; // 没有需要修的地方
+
+    // 重建：fLaC + STREAMINFO + 其余块（重设 last 标志）+ 原始音频帧
+    const kept = [{ type: FLAC_BLOCK_STREAMINFO, data: streaminfo }, ...blocks];
+    const audioStart = offset + position;
+    const audioLength = bytes.length - audioStart;
+    let total = 4 + audioLength;
+    for (const block of kept) total += 4 + block.data.length;
+    const out = new Uint8Array(total);
+    out[0] = 0x66; out[1] = 0x4c; out[2] = 0x61; out[3] = 0x43;
+    let cursor = 4;
+    kept.forEach((block, index) => {
+      const isLast = index === kept.length - 1;
+      out[cursor] = (isLast ? 0x80 : 0x00) | (block.type & 0x7f);
+      out[cursor + 1] = (block.data.length >> 16) & 0xff;
+      out[cursor + 2] = (block.data.length >> 8) & 0xff;
+      out[cursor + 3] = block.data.length & 0xff;
+      out.set(block.data, cursor + 4);
+      cursor += 4 + block.data.length;
+    });
+    // 音频帧原样保留（位流未被修改）
+    out.set(bytes.subarray(audioStart, bytes.length), cursor);
+    return out;
+  }
+
   return {
     MEASUREMENT_RATE,
     loudnessFromEnergy,
@@ -357,6 +455,7 @@
     loudnessRange,
     truePeakDbAsync,
     analyzeChannels,
+    repairFlacContainer,
     MOMENTARY_MS,
     SHORT_TERM_MS,
     HOP_MS
